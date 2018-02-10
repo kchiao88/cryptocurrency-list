@@ -4,10 +4,18 @@ import { Favorites } from '../api/crypto.js';
 import Skeleton from 'react-loading-skeleton';
 
 export default class Card extends Component {
+  constructor(props)
+  {
+    super(props);
+    this.state = { favbutton: false }
+    this.favoriteThisCoin = this.favoriteThisCoin.bind(this);
+  }
   favoriteThisCoin(thecoin)
   {
       console.log("=>", thecoin);
       Meteor.call('favorites.insert', thecoin);
+      this.setState({ favbutton: true});
+      
   }
   unfavoritecoin(thecoin)
   {
@@ -22,7 +30,7 @@ export default class Card extends Component {
       <div className="card-body">
         <h4 className="card-title">{this.props.task.text || <Skeleton/>}</h4>
         <p className="card-text">${this.props.task.price || <Skeleton/>}</p>
-        <button hidden={ theme || this.props.loggedIn } className="btn btn-danger" onClick={() => this.favoriteThisCoin(this.props.task.text) }>Favorite this please </button>
+        <button hidden={ theme || this.props.loggedIn || this.state.favbutton } className="btn btn-danger" onClick={() => this.favoriteThisCoin(this.props.task.text) }>Favorite this please </button>
         <button hidden={ !this.props.fav } className="btn btn-success" onClick={() => this.unfavoritecoin(this.props.task.text) }>Unfavorite this please </button>
       </div>
     </div>

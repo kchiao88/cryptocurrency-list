@@ -83,7 +83,7 @@ export class App extends Component {
 export default withTracker(() => {
       return {
         cc: Crypto.find({}).fetch(),
-        fcc: Favorites.find({ author: Meteor.user() ? Meteor.user().emails[0].address : "" }).fetch(),
+        fcc: Favorites.find({ author: Meteor.user().emails[0].address }).fetch() || {},
         currentUser: Meteor.user()
       };
 
