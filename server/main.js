@@ -20,9 +20,9 @@ Meteor.startup(() => {
         }
         */
         
-        console.log("server: ", coin, Meteor.user().emails[0].address);
+        //console.log("server: ", coin, Meteor.user().emails[0].address);
         const objectarray = Favorites.find({author:Meteor.user().emails[0].address}).fetch();
-        console.log(objectarray);
+        //console.log(objectarray);
         let coinchecker = true;
         for (let key in objectarray)
         {
@@ -47,6 +47,29 @@ Meteor.startup(() => {
               coin,
               author: Meteor.user().emails[0].address
             });          
+      },
+      'favorites.check'(coin)
+      {
+          const objectarray = Favorites.find({author:Meteor.user().emails[0].address}).fetch();   
+          console.log(objectarray);
+          
+          let coinchecker = true;
+          for (let key in objectarray)
+          {
+            let obj = objectarray[key];
+            if(obj["coin"] === coin)
+            {
+                coinchecker = false;
+            }
+          }
+          
+          if(coinchecker)
+          {
+                return true;
+          } else {
+            return false;
+          }
+          
       }
     });
 });

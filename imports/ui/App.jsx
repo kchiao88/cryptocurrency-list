@@ -74,16 +74,23 @@ export class App extends Component {
                             { this.renderCoinsFav() }
                         </div>                           
                     </div>
-                    }
+                    
             </div>
         );
     }
 }
 
 export default withTracker(() => {
+    let results;
+    if (Meteor.user() != null)
+    {
+        results = Favorites.find({ author: Meteor.user().emails[0].address }).fetch()
+    } else {
+        results = {} 
+    }
       return {
         cc: Crypto.find({}).fetch(),
-        fcc: Favorites.find({ author: Meteor.user().emails[0].address }).fetch() || {},
+        fcc: results,
         currentUser: Meteor.user()
       };
 

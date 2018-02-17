@@ -10,7 +10,7 @@ if (Meteor.isServer)
              .then((response) => {
                //console.log(response);
                // this.setState({cryptos: response.data})
-                for (var i = 0; i < 10; i++) //The json object has lenght
+                for (var i = 0; i < 20; i++) //The json object has lenght
                 {
                     var object = response.data[i]; //You are in the current object
                     Crypto.insert({_id: object["rank"], text: object["name"], price_btc: object["price_btc"], price: object["price_usd"], 
